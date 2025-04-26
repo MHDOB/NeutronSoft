@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neutron Soft - خطط الأسعار</title>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .header {
+      text-align: center;
+      padding: 20px;
+    }
+    .header img {
+      width: 120px;
+    }
+    .header h1 {
+      margin-top: 10px;
+      font-size: 28px;
+      color: #007acc;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      background: #007acc;
+      padding: 10px 0;
+    }
+    .tabs button {
+      background: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 0 5px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+    .tabs button.active {
+      background: #005f99;
+    }
+    .tabs button:hover {
+      background: #005f99;
+    }
+
+    /* Tab content */
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: auto;
+      display: none;
+    }
+    .plans.active {
+      display: grid;
+    }
+    .plan {
+      background: white;
+      border: 2px solid #007acc;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .plan h2 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #007acc;
+      padding: 10px;
+      border-radius: 10px;
+      background: #f2f8ff;
+      border: 2px solid #007acc;
+      text-align: center;
+    }
+    .plan .price {
+      font-size: 26px;
+      margin: 10px 0;
+      color: #000;
+    }
+    .features {
+      list-style: none;
+      padding: 0;
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    .features li {
+      margin-bottom: 10px;
+      font-size: 14px;
+      position: relative;
+      padding-right: 15px;
+    }
+    .features li::before {
+      content: "•";
+      position: absolute;
+      right: 0;
+      font-size: 18px;
+      color: #007acc;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #007acc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #005f99;
+    }
+
+    /* "قريبًا" design */
+    .coming-soon {
+      text-align: center;
+      background: #ffeb3b;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: 40px auto;
+      max-width: 600px;
+    }
+    .coming-soon h2 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    .coming-soon p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #007acc;
+      padding: 20px;
+      color: white;
+    }
+    footer .contact-info {
+      font-size: 18px;
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+    }
+    footer .contact-info i {
+      font-size: 22px;
+      margin-left: 10px;
+      color: white;
+    }
+    footer .whatsapp-btn {
+      display: inline-block;
+      padding: 12px;
+      background-color: #25d366;
+      color: white;
+      border-radius: 50%;
+      font-size: 24px;
+      text-decoration: none;
+    }
+    footer .whatsapp-btn:hover {
+      background-color: #128c7e;
+    }
+
+    .additional-features {
+      background-color: #f2f8ff;
+      padding: 40px;
+      margin: 40px 0;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .additional-features h3 {
+      text-align: center;
+      font-size: 24px;
+      color: #007acc;
+      margin-bottom: 30px;
+    }
+    .additional-features ul {
+      list-style: none;
+      padding: 0;
+    }
+    .additional-features ul li {
+      font-size: 18px;
+      margin-bottom: 15px;
+      position: relative;
+      padding-right: 25px;
+    }
+    .additional-features ul li::before {
+      content: "•";
+      position: absolute;
+      right: 0;
+      font-size: 20px;
+      color: #007acc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <img src="Design (2).png" alt="Neutron Soft Logo">
+  <h1>Neutron Soft Solutions</h1>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('store')">باقات المتاجر الإلكترونية</button>
+  <button class="tab-btn" onclick="showTab('crm')">CRM</button>
+  <button class="tab-btn" onclick="showTab('additional')">خدمات إضافية</button>
+</div>
+
+<!-- Content -->
+<div id="store" class="plans active">
+  <div class="plan">
+    <h2>باقة الانطلاق</h2>
+    <p class="price">$1500</p>
+    <ul class="features">
+      <li>لوحة تحكم (Admin)</li>
+      <li>تطبيق Android</li>
+      <li>اشتراك سنة (دومين + سيرفر + حساب Google Play)</li>
+      <li>شهادة SSL مجانية</li>
+      <li>دعم فني + نسخ احتياطي + مراقبة (3 أشهر)</li>
+      <li>إدخال البيانات الأساسية</li>
+      <li>تدريب على الاستخدام</li>
+    </ul>
+  </div>
+
+  <div class="plan">
+    <h2>باقة المتجر الإلكتروني</h2>
+    <p class="price">$2000</p>
+    <ul class="features">
+      <li>لوحة تحكم (Admin)</li>
+      <li>موقع إلكتروني كامل</li>
+      <li>اشتراك سنة (دومين + سيرفر)</li>
+      <li>شهادة SSL مجانية</li>
+      <li>دعم فني + نسخ احتياطي + مراقبة (3 أشهر)</li>
+      <li>إدخال البيانات الأساسية</li>
+      <li>تدريب على الاستخدام</li>
+    </ul>
+  </div>
+
+  <div class="plan">
+    <h2>باقة التطبيقات</h2>
+    <p class="price">$2500</p>
+    <ul class="features">
+      <li>لوحة تحكم (Admin)</li>
+      <li>تطبيق Android و iOS</li>
+      <li>اشتراك سنة (دومين + سيرفر + Google Play + Apple Developer)</li>
+      <li>شهادة SSL مجانية</li>
+      <li>دعم فني + نسخ احتياطي + مراقبة (3 أشهر)</li>
+      <li>إدخال البيانات الأساسية</li>
+      <li>تدريب على الاستخدام</li>
+    </ul>
+  </div>
+
+  <div class="plan">
+    <h2>باقة المتجر المتكامل</h2>
+    <p class="price">$3000</p>
+    <ul class="features">
+      <li>لوحة تحكم (Admin)</li>
+      <li>موقع إلكتروني كامل</li>
+      <li>تطبيق Android و iOS</li>
+      <li>اشتراك سنة (دومين + سيرفر + Google Play + Apple Developer)</li>
+      <li>شهادة SSL مجانية</li>
+      <li>دعم فني + نسخ احتياطي + مراقبة (6 أشهر)</li>
+      <li>إدخال البيانات الأساسية</li>
+      <li>تدريب على الاستخدام</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CRM Tab Content -->
+<div id="crm" class="plans">
+  <div class="coming-soon">
+    <h2>قريبًا</h2>
+    <p>ترقبوا باقات CRM الجديدة التي ستكون متاحة قريبًا.</p>
+  </div>
+</div>
+
+<!-- Additional Features Tab Content -->
+<div id="additional" class="plans">
+  <div class="plan">
+    <h2>خدمات إضافية</h2>
+    <ul class="features">
+      <li>إدارة الحملات الإعلانية (Google Ads, Facebook Ads): 200$/شهر</li>
+      <li>تصميم هوية بصرية كاملة: 300$</li>
+      <li>خدمة الدعم الفني + النسخ الاحتياطي + المراقبة بعد المجاني: 100$/شهر</li>
+      <li>تطوير ميزات خاصة: 10$/ساعة تطويرية</li>
+      <li>إدارة SEO احترافي: 200$/شهر</li>
+      <li>إدارة محتوى المتجر: 150$/شهر</li>
+      <li>تصميم واجهة UI + تطوير الموقع: 1000$</li>
+      <li>تصميم واجهة UI + تطوير التطبيقات: 1000$</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="contact-info">
+    <span><i class="fas fa-phone-alt"></i>  994011937 963 +</span>
+  </div>
+  <a href="https://wa.me/963994082082" class="whatsapp-btn" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width: 40px; height: 40px;">
+  </a>
+</footer>
+
+<script>
+  function showTab(tab) {
+    const tabs = document.querySelectorAll('.plans');
+    const buttons = document.querySelectorAll('.tab-btn');
+
+    tabs.forEach(tabContent => {
+      tabContent.classList.remove('active');
+    });
+    buttons.forEach(button => {
+      button.classList.remove('active');
+    });
+
+    document.getElementById(tab).classList.add('active');
+    const activeButton = Array.from(buttons).find(button => button.textContent === tab === 'store' ? 'باقات المتاجر الإلكترونية' : tab === 'crm' ? 'CRM' : 'خدمات إضافية');
+    activeButton.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
